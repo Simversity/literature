@@ -5,7 +5,7 @@ Party is an application framework designed to delegate work to other processes. 
 #### Use-Cases
 Party can be used for a wide variety of tasks that are either Cron based, need to be processed on a future timestamp, need to perform CPU intensive work, require Batch/Data processing, or perform overnight Map Reduce on the production database.
 
-Example
+Examples
 
 1. Send Email Notifications.
 2. Processing Search Database updates.
