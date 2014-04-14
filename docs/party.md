@@ -156,12 +156,13 @@ Task Execution
 
 Based on the number of workers available, job scheduler fetches new tasks from the Queue and dispatches them for Execution.
 
-Tasks with a lower timestamp are executed ahead of others. Scheudler is biased towards freshness and success, so if two tasks have the same timestamp the one with previously registered failed attempts would be executed later. When all other paramaters are the same the One that was queued earlier, is preferred.
+Tasks with a lower timestamp are executed ahead of others. Scheudler is biased towards freshness and success, so if two tasks have the same timestamp one with lower attempts is preferred. When all other paramaters match, One that was creared earlier, is preferred.
 
 Rules
+
 * Task once Completed cannot be reexecuted.
 * Tasks once Deleted, cannot be executed.
-* Task is considered failed after 6 attempts.
+* Task cannot be executed after 6 failed attempts.
 
 The execution process is automatic and is handled by a Job scheduler which can be started using a simple command
 
@@ -175,7 +176,7 @@ Do note that this is a blocking operation and should not be used in Production s
 
 Sample Usage:
 ```python
-con("/runtask", None, data={"_id": <TASKID>}, method="POST")
+con("/task/{TASK_ID}", None, method="POST")
 ```
 
 Database Connections
