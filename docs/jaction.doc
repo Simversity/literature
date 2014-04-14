@@ -1,0 +1,124 @@
+﻿    
+All Action urls constitute of two part
+handle - keyword for action
+object_id - _id for object on which action is to be performed
+
+Example:
+URL: /vote/138605375199893142421917
+
+Here, handle is 'vote' and object_id is _id of content that is intended to be voted.
+
+Only certain HTTP methods are allowed on a url, for a participant. Only allowed will be mentioned in this documentation.
+
+
+responses
+
+* GET all responses for a jontent
+
+* POST new response on a jontent
+    Params
+    text - String
+    title - String (Optional)
+    privacy - String (Options: private|public)
+
+    private responses can only be viewed by facilitators.
+    only curated content's response can be private.
+
+
+
+response
+
+* GET response where _id = object_id
+* PUT response where _id = object_id
+    Params
+    changed_data - JSON Map {key_to_change: new_value...}
+
+
+
+comments
+
+* GET all comments on a response
+* GET all replies on a comment
+    Params
+    kind = 'replies'
+
+* POST new comment on a response
+    Params
+    text - String
+
+    Comments do not offer the Privacy setting.
+    It is inherited from the response.
+
+* POST new reply on a comment
+    Params
+    text - String
+    parent_id - Id #comment's _id
+
+
+
+
+comment
+
+* GET comment where _id = object_id
+* PUT comment where _id = object_id
+    Params
+    changed_data - JSON Map {key_to_change: new_value...}
+
+
+
+skip
+
+* POST marks an item as skipped.
+* DELETE undoes the previous skip operation.
+
+skip is ONLY supported for curated questions. Skip has virtually no effect
+on ANY other content item.
+
+
+
+done
+
+* POST marks an item as done.
+* DELETE marks an item as undone.
+
+
+
+vote
+
+* POST to upvote
+Note: If already upvoted, this will remove the upvote
+* DELETE to downvote
+Note: If already downvoted, this will remove the downvote
+
+
+
+quizquestion – only applicable for Quiz content_type
+
+* GET to get questions object under a quiz, needed to render a quiz
+Params
+question_id: [optional] returns one question if provided, else all
+answers: [optional] returns answer object of logged-in user, if provided
+
+
+poll
+
+* POST to register the response of poll
+Params
+option_ids – ids of poll options selected by user
+
+* DELETE to remove the already registered responses of poll
+Params
+option_ids – ids of poll options de-selected by user
+
+
+polloption
+
+* POST to add a new poll option to Poll content_type, returns new _id
+Params
+text – text for poll option
+
+
+* DELETE to delete poll option added by user
+Params
+option_id - _id of poll option intended to be deleted
+
