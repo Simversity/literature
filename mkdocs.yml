@@ -1,4 +1,6 @@
 site_name: Siminars Developer Center
+site_description: Documentation to help you get started with Developing applications using the Siminars Platform
+repo_url: https://github.com/Simversity
 pages:
     - [index.md, Home]
     - [api.md, Api]
@@ -6,4 +8,4 @@ pages:
     - [nginx.md, Nginx]
     - [about.md, About]
 #theme: journal
-theme: readthedocs
+theme: bootstrap
