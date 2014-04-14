@@ -5,5 +5,5 @@ pages:
     - [party.md, Party]
     - [nginx.md, Nginx]
     - [about.md, About]
-theme: journal
-#theme: readthedocs
+#theme: journal
+theme: readthedocs
