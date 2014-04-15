@@ -5,6 +5,7 @@ pages:
     - [index.md, Home]
     - [api.md, Api]
     - [party.md, Party]
+    - [orm.md, ORM]
     - [nginx.md, Nginx]
     - [about.md, About]
 #theme: journal
