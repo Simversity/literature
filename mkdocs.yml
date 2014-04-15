@@ -8,4 +8,4 @@ pages:
     - [nginx.md, Nginx]
     - [about.md, About]
 #theme: journal
-theme: bootstrap
+theme: flatly
