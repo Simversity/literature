@@ -231,14 +231,14 @@ Response is a JSON map returning data that looks like this:
     "total_workers": 0,
     "debug": true,
     "undumped": [ ... {
-        "count": <TotalCompletedTasks>,
-        "_id": <TaskName>
+        "count": {TotalCompletedTasks},
+        "_id": {TaskName}
     } ... ],
     "last_run_on": "Unavailable",
     "pending": [ ... {
-        "count": <TotalPendingTasks>,
-        "_id": <TaskName>,
-        "upcoming": <UpComingTaskID>
+        "count": {TotalPendingTasks},
+        "_id": {TaskName},
+        "upcoming": {UpComingTaskID}
     } ... ],
     "restarted_workers": "Unavailable"
 }
