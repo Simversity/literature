@@ -8,6 +8,7 @@ pages:
     - [party.md, Party]
     - [orm.md, ORM]
     - [nginx.md, Nginx]
+    - [vagrant_howto.md, Vagrant]
     - [about.md, About]
 #theme: journal
 theme: readthedocs
