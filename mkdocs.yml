@@ -3,6 +3,7 @@ site_description: Documentation to help you get started with Developing applicat
 repo_url: https://github.com/Simversity
 pages:
     - [index.md, Home]
+    - [twelve-factor.md, 12Factors]
     - [api.md, Api]
     - [party.md, Party]
     - [orm.md, ORM]
