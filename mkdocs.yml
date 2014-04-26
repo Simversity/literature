@@ -9,4 +9,4 @@ pages:
     - [nginx.md, Nginx]
     - [about.md, About]
 #theme: journal
-theme: flatly
+theme: readthedocs
