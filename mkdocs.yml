@@ -4,14 +4,15 @@ repo_url: https://github.com/Simversity
 pages:
     - [index.md, Home]
     - [twelve-factor.md, 12Factors]
-    - [api.md, Api]
-    - [party.md, Party]
-    - [orm.md, ORM]
-    - [nginx.md, Nginx]
-    - [vagrant_howto.md, Vagrant]
-    - [caching.md, Caching (Last Working Implementation)]
-    - [affiliate_business_intro.md, Affiliate Requirement]
-    - [affiliate_hopper.md, Affiliate Hopper]
-    - [about.md, About]
+    - ['components/api.md', 'Components', 'Api']
+    - ['components/party.md', 'Components', 'Party']
+    - ['components/orm.md', 'Components', 'ORM']
+    - ['devOps/vagrant_howto.md', 'devOps', 'Vagrant']
+    - ['devOps/nginx.md', 'devOps', 'Nginx']
+    - ['devOps/caching.md', 'devOps', 'Caching']
+    - [affiliate/affiliate_business_intro.md, 'Affiliates', 'Biz Requirement']
+    - [affiliate/affiliate_hopper.md, 'Affiliates', 'Hopper']
+    - [affiliate/affiliate.md, 'Affiliates', 'Implementation']
+      #- [about.md, About]
 #theme: journal
-theme: readthedocs
+theme: flatly
