@@ -9,6 +9,9 @@ pages:
     - [orm.md, ORM]
     - [nginx.md, Nginx]
     - [vagrant_howto.md, Vagrant]
+    - [caching.md, Caching (Last Working Implementation)]
+    - [affiliate_business_intro.md, Affiliate Requirement]
+    - [affiliate_hopper.md, Affiliate Hopper]
     - [about.md, About]
 #theme: journal
 theme: readthedocs
