@@ -10,9 +10,9 @@ pages:
     - ['devOps/vagrant_howto.md', 'devOps', 'Vagrant']
     - ['devOps/nginx.md', 'devOps', 'Nginx']
     - ['devOps/caching.md', 'devOps', 'Caching']
-    - [affiliate/affiliate_business_intro.md, 'Affiliates', 'Biz Requirement']
-    - [affiliate/affiliate_hopper.md, 'Affiliates', 'Hopper']
-    - [affiliate/affiliate.md, 'Affiliates', 'Implementation']
+    - ['affiliate/affiliate_business_intro.md', 'Affiliates', 'Biz Requirement']
+    - ['affiliate/affiliate_hopper.md', 'Affiliates', 'Hopper']
+    - ['affiliate/affiliate.md', 'Affiliates', 'Implementation']
       #- [about.md, About]
 #theme: journal
 theme: flatly
