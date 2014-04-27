@@ -15,4 +15,4 @@ pages:
     - ['affiliate/affiliate.md', 'Affiliates', 'Implementation']
       #- [about.md, About]
 #theme: journal
-theme: flatly
+theme: spacelab
