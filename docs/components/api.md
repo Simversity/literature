@@ -39,22 +39,22 @@ In case everything is ok and there is no Error, both error & message would be No
 
 Status codes used with the corresponding Integer value.
 
-OK = PASS = 200
-CREATED = 201
-ACCEPTED = 202
-RESET = 205
-SEE_OTHER = 303
-LOGIN_REQUIRED = 401
-PAYMENT_REQUIRED = 402
-ACCESS_DENIED = 403
-NOT_FOUND = 404
-NOT_ALLOWED = 405
-CONFLICT = 409
-NULL_PARAM = 412
-CONDITION_FAIL = 412
-INVALID_PARAM = 412
-FAIL = 500
-INTERNAL_ERROR = 500
+- OK = PASS = 200
+- CREATED = 201
+- ACCEPTED = 202
+- RESET = 205
+- SEE_OTHER = 303
+- LOGIN_REQUIRED = 401
+- PAYMENT_REQUIRED = 402
+- ACCESS_DENIED = 403
+- NOT_FOUND = 404
+- NOT_ALLOWED = 405
+- CONFLICT = 409
+- NULL_PARAM = 412
+- CONDITION_FAIL = 412
+- INVALID_PARAM = 412
+- FAIL = 500
+- INTERNAL_ERROR = 500
 
 ## URLS ##
 You can generate a list of all the URLs exposed using the following call
