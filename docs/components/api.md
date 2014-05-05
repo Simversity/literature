@@ -352,14 +352,14 @@ an authtoken can be generated using:
 ```python
 from simtools.school import make_md5_password
 
-username = "piyush@siminars.com"
+email = "piyush@siminars.com"
 password = "Hello"
 
-encrypted_password = make_md5_password(username, password)
+encrypted_password = make_md5_password(email, password)
 
 auth_data = {
     "apitoken": 2,
-    "username": username,
+    "email": email,
     "password": encrypted_password
 }
 
