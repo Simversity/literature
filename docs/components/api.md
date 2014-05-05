@@ -339,9 +339,6 @@ The actual algorithm is:
  - Generate a hash using md5 algorithm.
  - return hexdigest() of the hash output.
 
-
-Authtokens are valid for upto 6 months until you logout using the same authoken. (Logging out is discussed later).
-
 NOTE:
 
 hexdigest returns a digest of the hash, where the output only contains hexadecimal digits. This may be used to exchange the value safely in email or other non-binary environments.
@@ -404,6 +401,12 @@ _NOTE: LinkedIn support shall be dropped soon_
  - Method: DELETE
  - Arguments: authtoken
 
+Do note that Authtokens are valid for 6 months until you logout using the same authoken.
+
+Does not Exist [TODO]:
+
+ - Invalidate ALL the authtokens of a user. You can only invalidate them one-by-one.
+ - List all active authtokens of a user.
 
 ### Forgot Password/ Reset Email ###
 
