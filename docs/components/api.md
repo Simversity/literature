@@ -159,7 +159,7 @@ Output is:
     u'blurb': u'',
     u'bundle_ids': [],
     u'deleted': False,
-    u'description': u"<p>We at <strong>siminars.com</strong> follow a lot of asynchronous code. Every time we process a request, not everything deserves to be executed in the same Request. Such <strong>Tasks</strong> need to be offloaded to a Queue where they can be executed as and when resources are available.</p><p>When we look closely such tasks exist in abundance, Video Processing, Regenerate Popularity Weights, Deleting Dependancy Content ( Virtual Fkeys for NoSQL Databases).</p><p>The Latency in execution of Such tasks is directly proportional to the Number of Workers processing them. There are a bunch of challenges involved in getting this production ready. Signup &amp; let's find out ...</p>",
+    u'description': u"<p>let's find out ...</p>",
     u'done': {},
     u'enforce_sequence': u'',
     u'featured_book': [u'136876039914810979336852'],
@@ -180,7 +180,7 @@ Output is:
     u'layout': u'two_column',
     u'list_price': 20,
     u'locked_to_context': u'',
-    u'logo_url': u'http://test.simversity.com.s3.amazonaws.com:80/thumbnail%2F133071947969939498163702_1349373899_1082-mongodb-sq-png-200x200.png',
+    u'logo_url': u'http://static.siminars.com/thumbnail/mongodb-sq-png-200x200.png',
     u'marketing_facilitator': 0,
     u'marketing_featured_book': 0,
     u'oldest_step': 0,
@@ -208,8 +208,10 @@ Output is:
             u'sequence': 2,
             u'title': u'Choosing & Setting-Up the right Database',
             u'todo_count': 0,
-            u'visited_on': False},
-        u'134937296241062751654962': {u'_id': u'134937296241062751654962',
+            u'visited_on': False
+        },
+        u'134937296241062751654962': {
+            u'_id': u'134937296241062751654962',
             u'can_visit': True,
             u'curated_count': 0,
             u'description': u'Components and Resources behind the Task Server, explained.',
@@ -219,8 +221,10 @@ Output is:
             u'sequence': 1,
             u'title': u'Introduction to the Task Server',
             u'todo_count': 0,
-            u'visited_on': False},
-        u'134943845527824879854962': {u'_id': u'134943845527824879854962',
+            u'visited_on': False
+        },
+        u'134943845527824879854962': {
+            u'_id': u'134943845527824879854962',
             u'can_visit': True,
             u'curated_count': 0,
             u'description': u'Detailed Snippets of the Code.',
@@ -230,8 +234,10 @@ Output is:
             u'sequence': 3,
             u'title': u'Explaining the Codes',
             u'todo_count': 0,
-            u'visited_on': False},
-        u'134946526481315149154962': {u'_id': u'134946526481315149154962',
+            u'visited_on': False
+        },
+        u'134946526481315149154962': {
+            u'_id': u'134946526481315149154962',
             u'can_visit': True,
             u'curated_count': 0,
             u'description': u'Proposed enhancements',
@@ -241,8 +247,10 @@ Output is:
             u'sequence': 5,
             u'title': u'ToDo',
             u'todo_count': 0,
-            u'visited_on': False},
-        u'134963289888335063154962': {u'_id': u'134963289888335063154962',
+            u'visited_on': False
+        },
+        u'134963289888335063154962': {
+            u'_id': u'134963289888335063154962',
             u'can_visit': True,
             u'curated_count': 0,
             u'description': u'The system exposes TasksCleanup & RecurringTasks, both of which have been implemented using the base architecture.',
@@ -253,12 +261,15 @@ Output is:
             u'title': u'Extras: Goodies implemented using the back stack.',
             u'todo_count': 0,
             u'visited_on': False
-        }},
-    u'steps': [u'134937296241062751654962',
-            u'134936656326335937354962',
-            u'134943845527824879854962',
-            u'134963289888335063154962',
-            u'134946526481315149154962'],
+        }
+    },
+    u'steps': [
+        u'134937296241062751654962',
+        u'134936656326335937354962',
+        u'134943845527824879854962',
+        u'134963289888335063154962',
+        u'134946526481315149154962'
+    ],
     u'steps_num': 5,
     u'students': {},
     u'students_pending': {},
