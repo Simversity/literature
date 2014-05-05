@@ -297,7 +297,7 @@ Output is:
 'message': None}
 
 ```
-## Authtoken ##
+## Authentication ##
 
 Most API requests would require a valid authtoken. A request is validated by supplying "authtoken" along with the other data in the submitted call.
 
@@ -312,15 +312,15 @@ Examples:
 
 Supplying the right authtoken is very important and they must be handled with full attention and care.
 
-### Generating uusing Username/Password ###
+### Using Username/Password ###
 
  - Urlname: authtoken
  - Method: POST
- - Arguments: username, encrypted_password
+ - Arguments: email, password
 
 Where:
-username is the email address of the user (case insensitive)
-encrypted_password is a md5 of username and clear text password.
+email is the email address of the user (case insensitive)
+password is a md5 of username and user's clear-text password.
 
 The password encryption is important because our databases do not store or accept clear-text-passwords and we discourage the transfer of sensitive clear-text information over the wire.
 
@@ -339,12 +339,72 @@ The actual algorithm is:
  - Generate a hash using md5 algorithm.
  - return hexdigest() of the hash output.
 
+
+Authtokens are valid for upto 6 months until you logout using the same authoken. (Logging out is discussed later).
+
 NOTE:
 
 hexdigest returns a digest of the hash, where the output only contains hexadecimal digits. This may be used to exchange the value safely in email or other non-binary environments.
 
-### Generating using 3rd Party Services like Facebook/ Google/ LinkedIn ###
+
+Example:
+
+If the username is piyush@siminars.com and the password is Hello,
+an authtoken can be generated using:
+
+```python
+from simtools.school import make_md5_password
+
+username = "piyush@siminars.com"
+password = "Hello"
+
+encrypted_password = make_md5_password(username, password)
+
+auth_data = {
+    "apitoken": 2,
+    "username": username,
+    "password": encrypted_password
+}
+
+out = con("/authtoken", None, data=auth_data, method="POST")
+print out["data"]
+
+```
+
+Output carries the authtoken and the user_id of the just authenticated user:
+```
+{
+    u'status': 201,
+    u'message': u'',
+    u'data': {
+        u'authtoken': u'139927583041014080855057',
+        u'user_id': u'133550072236313429963702'
+    }
+}
+```
+
+However, if you provide an incorrect username and password. API would respond with an error that looks like:
+```
+{
+    'message': u'Invalid Username or Password.',
+    'code': 412,
+    'data': None,
+    'error': HTTPError(u'HTTP 412: Invalid Username or Password.')
+}
+```
+
+### Using 3rd Party Services like Facebook/ Google/ LinkedIn ###
 
 _NOTE: LinkedIn support shall be dropped soon_
 
 (.... continued ...)
+
+### LogOut ###
+ - Urlname: authtoken
+ - Method: DELETE
+ - Arguments: authtoken
+
+
+### Forgot Password/ Reset Email ###
+
+API does not expose a way to forget password and rest the primary email. It can only be done using the web interface.
