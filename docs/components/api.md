@@ -270,4 +270,36 @@ Output is:
 ```
 ## Authtoken ##
 
-Most API requests would require a valid authtoken unless stated otherwise. Authtoken can be generated using a POST call
+Most API requests would require a valid authtoken. A request is validated by supplying "authtoken" along with the other data in the submitted call.
+
+Use cases:
+ - Leave blank for anonymous view of a particular request.
+ - Different authtokens can be used to have different views as per the user.
+
+Examples:
+ - An unlaunched Siminar can only be viewed by the Siminar Facilitator. If the right authtoken is not supplied it will raise 404.
+ - A paid siminar will raise 405 if the authtoken supplied is of a non-member.
+ - WHile fetching responses authtoken supplied will identify the user and show/hide private responses accordingly.
+
+Supplying the right authtoken is very important and they must be handled with full attention and care.
+
+### Generating Authtoken using Username/Password ###
+
+ - Urlname: authtoken
+ - Method: POST
+ - Arguments: username, encrypted_password
+
+Where:
+username is the email address of the user (case insensitive)
+encrypted_password is a md5 of username and clear text password.
+
+```
+from simtools.school import make_md5_password
+encrypted_password = make_md5_password(email, password)
+```
+
+### Generating Authtoken using 3rd Party Services like Facebook/ Google/ LinkedIn ###
+
+_NOTE: LinkedIn support shall be dropped soon_
+
+(.... continued ...)
