@@ -122,6 +122,8 @@ Output is:
 
 ```
 
+### Making API Requests ###
+
 The output is {key: value} pair of the format {"urlname": "url_format"}
 If the contains the %(variable_name)s it means that it needs to be substituted with a value.
 Example: 
