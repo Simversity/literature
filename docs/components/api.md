@@ -306,7 +306,7 @@ Examples:
 
 Supplying the right authtoken is very important and they must be handled with full attention and care.
 
-### Generating Authtoken using Username/Password ###
+### Generating uusing Username/Password ###
 
  - Urlname: authtoken
  - Method: POST
@@ -316,12 +316,28 @@ Where:
 username is the email address of the user (case insensitive)
 encrypted_password is a md5 of username and clear text password.
 
-```
+The password encryption is important because our databases do not store or accept clear-text-passwords and we discourage the transfer of sensitive clear-text information over the wire.
+
+Simtools exposes a method to generate the encrypted_password using email and clear-text password.
+
+```python
 from simtools.school import make_md5_password
 encrypted_password = make_md5_password(email, password)
 ```
 
-### Generating Authtoken using 3rd Party Services like Facebook/ Google/ LinkedIn ###
+The actual algorithm is:
+
+ - Convert Email to lower case
+ - Convert to BaseString
+ - Concatenate username and password
+ - Generate a hash using md5 algorithm.
+ - return hexdigest() of the hash output.
+
+NOTE:
+
+hexdigest returns a digest of the hash, where the output only contains hexadecimal digits. This may be used to exchange the value safely in email or other non-binary environments.
+
+### Generating using 3rd Party Services like Facebook/ Google/ LinkedIn ###
 
 _NOTE: LinkedIn support shall be dropped soon_
 
