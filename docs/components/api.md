@@ -1,5 +1,12 @@
-Introduction
-------------
+##Introduction##
+
+API is the primary interface to Siminars' Data.
+
+It is mostly RESTful, barring a few old requests, and most resources can be accessed using GET, PUT, POST & DELETE requests.
+
+## API Connection ##
+
+Through out this documentation we will use the con as an active connection to the API Server. You can create one using various types of HTTPClients exposed by simtools.uhttpclient. For simplicity's sake we will use BlockingHTTPClient in this example.
 
 ```
 from simtools.uhttpclient import BlockingHTTPClient
@@ -7,10 +14,6 @@ from simtools.uhttpclient import BlockingHTTPClient
 con = BlockingHTTPClient("/tmp/api.sock") #If listening on a Unix Domain Socket.
 con = BlockingHTTPClient("127.0.0.1:{PORT}") #If listening on a TCP Port of your choice. Default is 8000.
 ```
-
-API is the primary interface to Siminars' Data.
-
-It is mostly RESTful, barring a few old requests, and most resources can be accessed using GET, PUT, POST & DELETE requests.
 
 ## Content-Type ##
 The API uses HTTP calls for all communication and only accepts Content-Type: application/javascript as a valid content-type.
