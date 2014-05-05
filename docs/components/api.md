@@ -6,7 +6,10 @@ It is mostly RESTful, barring a few old requests, and most resources can be acce
 
 ## API Connection ##
 
-Through out this documentation we will use the con as an active connection to the API Server. You can create one using various types of HTTPClients exposed by simtools.uhttpclient. For simplicity's sake we will use BlockingHTTPClient in this example.
+Through out this documentation we will assume that you have an active connection to the API Server.
+You can create a new connection using various types of HTTPClients exposed by simtools.uhttpclient.
+
+For simplicity's sake we will use BlockingHTTPClient in this example.
 
 ```
 from simtools.uhttpclient import BlockingHTTPClient
