@@ -25,21 +25,21 @@ ___
     Port Default <default>
     Version 9.0 & above
     dbname serverlogs
-    
+
 Users
 
     cable_guy (root, owns everything)
     log_feeder (write-only access to bjdump/apidump)
     log_viewer (read-only access to entire database)
     aws_feeder (write-only access to prod_db dump)
-    
+
 ___
 
 ## Party
 
 ### Nginx
 Version
-    
+
     any
 
 nginx.conf
@@ -132,8 +132,8 @@ local_settings.py
     SHORTNER_HOST = {shortener_host}
 
     LOG_DB_HOST = {reporting_db_host}
-    
-    
+
+
 ### agora_party2
 Code
 
@@ -160,7 +160,7 @@ Reuse the party package
 local_settings.py
 
     DEBUG = False
-    
+
     TASKS_TO_CONSIDER = ["PendingActivity", "UpcomingActivity"]
     WORKERS = {no. of cores}/2
     WORKER_INTERVAL = 5
@@ -249,7 +249,7 @@ nginx.conf
                 proxy_set_header X-Scheme $scheme;
                 proxy_pass http://api;
                 proxy_http_version 1.1;
-                proxy_set_header Connection "";   
+                proxy_set_header Connection "";
             }
         }
 
@@ -265,7 +265,7 @@ nginx.conf
                 proxy_set_header X-Scheme $scheme;
                 proxy_pass http://subpub;
                 proxy_http_version 1.1;
-                proxy_set_header Connection "";   
+                proxy_set_header Connection "";
             }
         }
 
@@ -287,7 +287,7 @@ nginx.conf
                 proxy_set_header X-Scheme $scheme;
                 proxy_pass http://blackjack;
                 proxy_http_version 1.1;
-                proxy_set_header Connection "";   
+                proxy_set_header Connection "";
             }
 
             location / {
@@ -330,7 +330,7 @@ nginx.conf
                 proxy_pass http://blackjack/nginx-upload;
                 proxy_read_timeout 15m;
                 proxy_http_version 1.1;
-                proxy_set_header Connection "";   
+                proxy_set_header Connection "";
             }
 
             location /google93e78432f77d32fa.html {
@@ -352,27 +352,46 @@ nginx.conf
                 proxy_redirect off;
                 proxy_set_header X-Real-Ip $remote_addr;
                 proxy_set_header X-Scheme $scheme;
-                proxy_pass http://blackjack;     
+                proxy_pass http://blackjack;
                 proxy_http_version 1.1;
-                proxy_set_header Connection "";   
+                proxy_set_header Connection "";
             }
         }
     }
+
+
+### Redis
+
+Version
+
+    2.6 & above
+
+redis.conf
+
+    daemonize no
+    pidfile /tmp/redis/redis.pid
+    port 0
+    unixsocket {redis_socket_path}
+    unixsocketperm 755
+    timeout 0
+    loglevel notice
+    databases 2
+    maxmemory 10572800
 
 ### API1
 Code
 
     agora_api: git@github.com:Simversity/agora_api branch: prod_api
     simtools: git@github.com:Simversity/simtools branch: prod_simtools
-    
+
 local_settigs.py
 
     DEBUG = False
-    
+
     LOGGER = "buffer"
-    
+
     UNIX_SOCKET = /tmp/api1.sock
-        
+
     DB_HOST = {prodDbHost}
     PARTYHOST = "{party_host}:8032"
     SUBPUB_HOST = "127.0.0.1:{nginx_subpub_port}"
@@ -381,105 +400,107 @@ local_settigs.py
 Code
 
     same as API1
-    
+
 local_settigs.py
 
     (Same as API1. With the following changes)
     UNIX_SOCKET = /tmp/api2.sock
-    
+
 ### Blackjack1
 Code
 
     blackjack: git@github.com:Simversity/blackjack branch: prod_blackajck
     simtools: git@github.com:Simversity/simtools branch: prod_simtools
-    
+
 local_settigs.py
 
     DEBUG = False
-       
+
     LOGGER = "buffer"
     SITESEARCH = False
-    
+
     USE_CUSTOM_FONT = True
     FRONT_END_ERROR = True
-    
+
     DOMAIN = {domain_name}
-    
+
     USE_CACHE = True
+    REDIS_SOCK = {redis_socket_path}
+
     ALLOW_ANALYTICS = True
 
     USE_GZIP = True
     USE_COMPRESSED_JS = True
     USE_COMPRESSED_CSS = True
-    
+
     TMPL_PATH = "{path_to_blackjack_checkout}/templates"
-    
+
     UNIX_SOCKET = /tmp/blackjack1.sock
-    
+
     APIHOSTS = "127.0.0.1:{apiport}"
     PARTYHOST = "{partyhost}:8032}"
-    
+
     VERSION = {static_content_version}
-    
+
     STATIC_URL = "http://d3z60wkw2l5fo.cloudfront.net/static/"
     DROPBOX_URL = "http://d3z60wkw2l5fo.cloudfront.net/static/"
-    
+
     REPORT_USER = "log_viewer"
     REPORT_PASSWORD = "l0gv13w3r"
     REPORT_DBNAME = "serverlogs"
     REPORT_HOST = "{reporting_db_host}"
-    
+
 ### Blackjack2
 Code
 
     Same as Blackjack1
-    
+
 local_settings.py
 
     (Same as Blackjack1 with the following changes)
     UNIX_SOCKET = "/tmp/blackjack2.sock"
-    
+
 ### subpub_tcp1
 Code
 
     usher: git@github.com:Simversity/usher branch: prod_usher
 
 Dependencies
-    
+
     golang
     wget https://godeb.s3.amazonaws.com/godeb-amd64.tar.gz
     $ ./godeb install
-    
+
     export GOPATH={path_to_usher_checkout}
     export PATH=$GOPATH/bin:$PATH
-    
+
     easy_install bzr
     go get labix.org/v2/mgo
-    
+
     go get code.google.com/p/gcfg
     go get github.com/garyburd/redigo/redis
-    
+
     go install subpub_tcp
     go install standalone
 
 subpub_settings.cfg
-    
+
     [subpub]
     SenderName={domain_name}
     ProdHost="127.0.0.1:27019"
     SubPubHost="127.0.0.1:27019"
     BlackjackHost="127.0.0.1:27019"
-    
+
 
 Usage
 
     subpub_tcp -config={path_to_subpub_settings.cfg} -UNIX_SOCKET=/tmp/subpub1.sock
-    
+
 ### subpub_tcp2
 Code
 
     (same as subpub_tcp1)
-    
+
 Usage
 
     subpub_tcp -config={path_to_subpub_settings.cfg} -UNIX_SOCKET=/tmp/subpub2.sock
