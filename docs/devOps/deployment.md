@@ -37,7 +37,7 @@ local_settings.py
 
  - UNIX_SOCKET=/tmp/party2.sock
 
-## Scheduler1
+### Job Scheduler1
 Reuse the party package
 
 local_settings.py
@@ -46,7 +46,7 @@ local_settings.py
  - WORKERS = [no. of cores]
  - WORKER_INTERVAL = 2
 
-## Scheduler2
+### Job Scheduler2
 
 Reuse the party package
 
