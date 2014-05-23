@@ -67,19 +67,15 @@ local_settings.py
     SHORTNER_HOST = "10.0.0.22"
     SHORTNER_DUMMY = False
 
-    #SUPPRESS_EMAIL = True
     SENDER_NAME = "Siminars"
-    LOG_DB_HOST = "serverlogs.simversity.com"
-    #SKIP_TASKS = ["BJLogs", "APILogs", "RouterLogs"]
+    LOG_DB_HOST = {reporting_db_host}
 
-    TASKS_TO_CONSIDER = ["PendingActivity", "UpcomingActivity"]
     SEND_PENDING_DAY = 5
-    #TASKS_TO_CONSIDER = ["UpcomingActivity"]
 
     #PayPal Live
-    PAYPAL_USERNAME = 'payments_api1.simversity.com'
-    PAYPAL_PASSWORD = '86LQL87P2QB6T9TP'
-    PAYPAL_SIGNATURE =    'AFcWxV21C7fd0v3bYYYRCpSSRl31A2ijbffnRZxlY127F1C26HCmEtjz'
+    PAYPAL_USERNAME = {paypal_username}
+    PAYPAL_PASSWORD = {paypal_password}
+    PAYPAL_SIGNATURE = {paypal_signature}
     PAYPAL_VERSION = "82.0"
     
     
@@ -202,3 +198,8 @@ Code
 local_settings.py (Same as Blackjack1 with the following changes)
     
     UNIX_SOCKET = "/tmp/blackjack2.sock"
+    
+---
+
+Usher
+
