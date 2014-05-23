@@ -504,3 +504,24 @@ Code
 Usage
 
     subpub_tcp -config={path_to_subpub_settings.cfg} -UNIX_SOCKET=/tmp/subpub2.sock
+
+----
+
+#Outbound connections
+
+##Party
+
+    http://api.embed.ly
+    http://productsearch.linksynergy.com
+    https://test.authorize.net
+    https://apitest.authorize.net
+    https://secure.authorize.net
+    https://api.authorize.net
+    https://api-3t.sandbox.paypal.com
+    https://api-3t.paypal.com
+    https://click.siminars.com
+
+    {any-has-offer-completion-url}
+    {amazon_api_endpoints}
+    {aws_api_endpoints}
+
