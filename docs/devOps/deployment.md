@@ -27,7 +27,8 @@ Dependencies:
  - psycopg2
  - simtools (prod_simtools from git@github.com:Simversity/simtools)
 
-local_settings.py:
+local_settings.py
+
  - UNIX_SOCKET=/tmp/party1.sock
 
 ### agora_party2
