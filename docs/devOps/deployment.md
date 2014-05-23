@@ -45,7 +45,7 @@ Version
 nginx.conf
 
     user ubuntu;
-    worker_processes  8;
+    worker_processes  {no. of cpu}*2;
 
     error_log  /tmp/nginx/error.log;
     pid        /tmp/nginx/nginx.pid;
@@ -188,7 +188,7 @@ Recipe
 nginx.conf
 
     user ubuntu;
-    worker_processes  8;
+    worker_processes  {no. of cpu}*2;
 
     error_log  /tmp/nginx/error.log;
     pid        /tmp/nginx/nginx.pid;
