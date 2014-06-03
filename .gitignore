@@ -1,2 +1,3 @@
 site/
-_site
+_site/*
+_pages/*
