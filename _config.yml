@@ -18,7 +18,8 @@ sections: [
     ['party', 'Party'],
     ['orm', 'Orm'],
     ['ops', 'devOps'],
-    ['req', 'Requirements']
+    ['req', 'Requirements'],
+    ['tut', 'Tutorials'],
 ]
 
 # Keep as an empty string if served up at the root. If served up at a specific
