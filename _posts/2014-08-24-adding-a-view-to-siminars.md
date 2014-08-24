@@ -77,11 +77,17 @@ Tornado is a non blocking server that provides an extensive api for asynchronous
 @tornado.web.asynchronous
 @tornado.gen.engine
 ```
+This is an example of some of the decorators one might use for creating a view. The first one here checks if the user is authenticated. If not the user is redirected to login url. 
+The web.asynchronous decorator does not make a method asynchronous; it tells the framework that the method is asynchronous.
+gen.engine, Decorator for asynchronous generators. 
+
 
 
 ```python
 def get(self, user_id):
 ```
+In example urlpattern r"/valid/(?P<user_id>\d{19}63702)/?$ , the second part is the argument for this function.
+
 
 ```python
 ret, status = yield gen.Task(
@@ -91,9 +97,19 @@ ret, status = yield gen.Task(
 urls = ret.get("urls", {})
 ```
 
+Read tornado's [gen.task](http://tornado.readthedocs.org/en/latest/gen.html#tornado.gen.Task)
+
+
+
 ```python
+
+template = "validurls/validurls"
+
+
+self.context['user_id'] = str(user_id)
+self.context['urls'] = urls
 self.render_to_response()
 ```
 
-
-
+This is helper function from  BaseHandler which renders the template with the given context(self.context)
+ 
