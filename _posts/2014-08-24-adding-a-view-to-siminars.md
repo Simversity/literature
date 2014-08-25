@@ -13,8 +13,9 @@ Adding a view entails adding a url in blackjack for the particular view. The api
 
 To add a url. Create a Url object and extend the urlpatterns
 
-```python
 Url object takes pattern, handler_class and named url pattern for reverse resolution as required arguments.
+
+```python
 
 from simtools.server_utils import Url
 from handlers import validurls as valid_urls_handler
@@ -31,8 +32,10 @@ The first argument here is pattern, second handler class in blackjack and the th
 An important thing to note and a difference from urldispatch of django is that regex pattern always should be a named group. This is because this is used in the reverse url mapping mechanism of Urls.
 
 ```python
+
 simple_url = lambda s: rurl.subn(
     lambda x: "%%(%s)s" % x.groups()[1], sd(sc(s)))[0]
+
 ``` 
 
 

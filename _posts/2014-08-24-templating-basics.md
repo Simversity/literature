@@ -3,6 +3,7 @@ layout: page
 title: "Templating Basics"
 description: "Add a view to Siminars. Add a url, and an api call"
 category: tut
+date:  2014-08-29 19:05:07
 tags: []
 ---
 
