@@ -18,11 +18,11 @@ Url object takes pattern, handler_class and named url pattern for reverse resolu
 ```python
 
 from simtools.server_utils import Url
-from handlers import validurls as valid_urls_handler
+from handlers import hello as hello_handler
  
 urlpatterns += [
-    Url(r"/valid/(?P<user_id>\d{19}63702)/?$",
-        valid_urls_handlers.ValidUrls, 'valid_urls'),
+    Url(r"/hello/(?P<tabname>\w+)/?$",
+        hello_handler.HelloHandler, 'hello'),
 ]
 
 ``` 
@@ -42,78 +42,92 @@ simple_url = lambda s: rurl.subn(
 
 ### Writing a blackjack Handler
 
-To add a view handler to blackjack. Add it to handlers folder in blackjack. In case we want to add a new handler. Add a file for the handler and a view Class for it in the following manner.
+To add a view handler to blackjack. Add it to handlers folder in blackjack. In case we want to add a new handler. Add a file for the handler and a view class for it in the following manner.
 
 ```python
-blackjack/handlers/validurls.py
+blackjack/handlers/hello.py
 
-import tornado
-import tornado.gen as gen
 from core import BaseHandler
 
-class ValidUrls(BaseHandler):
-    template = "validurls/validurls"
+class HelloHandler(BaseHandler):
 
-    @tornado.web.authenticated
-    @tornado.web.asynchronous
-    @tornado.gen.engine
-    def get(self, user_id):
-        ret, status = yield gen.Task(
-            self.api.caller.get,
-            self.api.caller.get_url('urls')
-        )
-        urls = ret.get("urls", {})
-        
-        self.context['user_id'] = str(user_id)
-        self.context['urls'] = urls
-        
-        self.render_to_response()
+
+    def get(self, tabname):
+    	template = "hello/hello"
+       	context['text'] = "Hello World"
+
+        self.render_to_response(template, context)
 
 
 ```
 
-As you can see ValidUrls extends BaseHandler. BaseHandler is itself an extension of [tornado web request handlers](http://www.tornadoweb.org/en/branch2.1/web.html). Which providers helper api for http requests. Apart from that BaseHandler provides additional tools and api for handling http requests. Providing a layer for cross platform optimization and tools etc... , request context handling, context handling and api's for templating. 
+As you can see HelloHandler extends BaseHandler. BaseHandler is itself an extension of [tornado web request handlers](http://www.tornadoweb.org/en/branch2.1/web.html). Which providers helper api for http requests. Apart from that BaseHandler provides additional tools and api for handling http requests. Providing a layer for cross platform optimization and tools etc... , request context handling, context handling and api's for templating.
+
+
+ 
 
 Tornado is a non blocking server that provides an extensive api for asynchronous code.
 
+
+
+```python
+def get(self, tabname):
+```
+In example urlpattern r"/hello/(?P<tabname>\w+)/?$" , the second part is the argument for this function.
+
+
+
+
+
+
+
+```python
+
+template = "hello/hello"
+context['text'] = "Hello World"
+
+self.render_to_response(template, context)
+```
+
+This(self.render_to_response) is helper function from  BaseHandler which renders the template with the given context. If you don't pass them like this. It will use self.template and self.context.
+
+### Adding authentication and other decorators
+What do you when you have to make sure the url is only accessible to an authenticated user. Enter helper decorators.
+
+from core import BaseHandler
+import core
+
+```python
+class HelloHandler(BaseHandler):
+
+    @tornado.web.authenticated
+    @core.decorators.signature(params=['someparam'])
+    def get(self, tabname):
+    	template = "hello/hello"
+       	context['text'] = "Hello World"
+
+        self.render_to_response(template, context)
+
+```
+
+This Handler has some helper [decorators](http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/).
+
+Lets see what these decorators do:
+
 ```python
 @tornado.web.authenticated
-@tornado.web.asynchronous
-@tornado.gen.engine
-```
-This is an example of some of the decorators one might use for creating a view. The first one here checks if the user is authenticated. If not the user is redirected to login url. 
-The web.asynchronous decorator does not make a method asynchronous; it tells the framework that the method is asynchronous.
-gen.engine, Decorator for asynchronous generators. 
-
-
-
-```python
-def get(self, user_id):
-```
-In example urlpattern r"/valid/(?P<user_id>\d{19}63702)/?$ , the second part is the argument for this function.
-
-
-```python
-ret, status = yield gen.Task(
-            self.api.caller.get,
-            self.api.caller.get_url('urls')
-        )
-urls = ret.get("urls", {})
+@core.decorators.signature(params=['someparam'])
+def get(self, tabname, someparam)
 ```
 
-Read tornado's [gen.task](http://tornado.readthedocs.org/en/latest/gen.html#tornado.gen.Task)
+tornado.web.authenticated checks whether or not the user is authenticated. If not it redirects the user to a login url specified.
 
+The core.decorators.signature validates the request if it has all the params or not for example here it will check whether the url contain the get parameter someparam.Otherwise the server would complain
 
+```text
 
-```python
-
-template = "validurls/validurls"
-
-
-self.context['user_id'] = str(user_id)
-self.context['urls'] = urls
-self.render_to_response()
+HTTPError: HTTP 412: Precondition Failed (someparam is a required parameter)
+  
 ```
 
-This is helper function from  BaseHandler which renders the template with the given context(self.context)
- 
+
