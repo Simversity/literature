@@ -8,13 +8,63 @@ category: tut
 
 ### Introduction
 
-Now we could get our required result with the last example but there are some things missing. For one, every request refreshes the whole page. That is undesirable for natural usage for the user. And the page is repainted by the browser again and again. 
+Now we could get our required result with the last example but there are some
+things missing. For one, every request refreshes the whole page. That is
+undesirable for natural usage for the user. And the page is repainted by the
+browser again and again.
 
-Enter routes. Routes is a siminar library which uses history specs in html5. routes provides a mechanism to paint the DOM based on url states. 
+Enter routes. Routes is a siminar library which uses history specs in html5.
+routes provides a mechanism to re-play the actions based on the URL state.
+
+In a traditional approach a developer traps a DOM event and triggers a
+corresponding UI action with no measure to redo the changes on page refresh or
+open-in-new-tab.
+
+_route solves this problem by changing the click-based events to URL based
+events.
+
+The application developer registers listeners for url_patterns, absolute_urls OR
+get_arguments, and any change in the value would trigger the registered
+listener. So a click would _ONLY_ push a state and _route will handle the rest.
+
+_route ALSO solves the problem of replaying the triggers as a user goes back &
+forward through the browser history.
+
+Example:
+
+Our single page application is accessed by the URL "/hello/<tab_name>/" where
+tab_name could be "hello", "tabbed" or "world"
+
+Step1 is to register listeners of this URL.
+
+```
+_route.unbind_bind(";hello", function(){ console.log("Tab changed"); })
+```
+
+Step2: Bind all clicks to push the destination URL.
+
+```
+$("#tab1").unbind("click").bind("click", function() {
+  var elem = $(this);
+  _route.push(elem.attr('href'));
+});
+```
+
+Flow:
+
+1.  Viewer clicks the button.
+
+2.  JS executes _route.push(url)
+
+3.  _route checks for available listeners that match <url>.
+
+4.  If any listeners are available, the url is pushed to the history_stack & the
+    navigation bar and the corresponding listener is triggered.
 
 
 
-### Routes
+## Routes
+
 
 
 ```javascript
