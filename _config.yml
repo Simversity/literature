@@ -20,6 +20,7 @@ sections: [
     ['ops', 'devOps'],
     ['req', 'Requirements'],
     ['tut', 'Tutorials'],
+    ['tips', 'Tips and tricks']
 ]
 
 # Keep as an empty string if served up at the root. If served up at a specific

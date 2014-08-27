@@ -1,35 +1,100 @@
 ---
 layout: page
 title: "Keeping states using routes"
-description: ""
+description: "Keeping states with routes"
 category: tut
 
 ---
 
-### Routes base routing
+### Introduction
 
-To understand more about states based routing offered by routes.js. One can look at this documentation of [angular-ui](https://github.com/angular-ui/ui-router/wiki/URL-Routing).
+Now we could get our required result with the last example but there are some things missing. For one, every request refreshes the whole page. That is undesirable for natural usage for the user. And the page is repainted by the browser again and again. 
 
-Lets say you are on a link /valid . You have three tabs on it. And you wish to maintain the states in it such that when you refresh a page or something you should reach the same state.
+Enter routes. Routes is a siminar library which uses history specs in html5. routes provides a mechanism to paint the DOM based on url states. 
 
-```text
-     
-     /valid
-	  tab1
-	  tab2
-	  tab3
+
+
+### Routes
+
+
+```javascript
+    function () {
+        var self = this;
+        function tab_change_listener(kw) {
+           
+            $(".text_here").text("The tab clicked is " + kw.url_args['tabname']);
+            $('a', self.cache_l.c).removeClass("btn-warning");
+            $('a[rel='+ kw.url_args.tabname +']', self.cache_l.c).addClass("btn-warning");
+
+        }
+
+        _route.unbind_bind(';hello', tab_change_listener, function() {
+            console.log("Awesome change");
+            _route.refresh();
+        });
+    },
 
 ```
 
-This is handled by routes.js. routes.js provides convinience library for that. In its essence routes binds certain events to url states such that if you arrive at a url state. The events are automatically triggered.
+Lets see what the _route in this snippet is all about
+
+```javascript
+	_route.unbind_bind(';hello', tab_change_listener, function() {
+            console.log("Awesome change");
+            _route.refresh();
+        });
+```
+
+This snippet binds a certain function tab_change_listener. This basically means that whenever the url state changes to hello/<something>, the tab_change_listener function is triggered. Hence we can do the actions for tab change here. You can pass a callback at the end of unbind_bind. In this case the callback actually runs _route.refresh which emulates a url refresh of the page.
+  
+
+### Implementing our UI with routes
+
+Server side:
+
+Before you add a js file to siminars. You have to tell the asset management system about it. The way you do that is by adding the file in blackjack/utils/js_map.py
+
+ 
+```python
+DEBUG_JS = { ...
+
+    "hello":[
+        "jack_js/hello.js",
+        ],
+}
+```
 
 
-### Finding the url states
 
 
-Lets say we have an html
+
+
+Template changes:
+
+On the template side we add this snippet in our template
+
+```html
+<?py with capture_as('js'):?>
+#{ the.load_js_dependencies(this, "hello") }
+<script type="text/javascript">
+  $(function() {
+      var _hello = new Hello("${tabname}");
+      _hello.init()
+      });
+</script>
+<?py #endwith ?>
+```
+
+This tells template system we are customizing the js part of the base layout and 
 
 ```text
+#{ the.load_js_dependencies(this, "hello") }
+```
+
+This loads the js files defined in js_map under the key hello.
+
+
+```html
 <?py _context['_layout'] = 'base.t_html' ?>
 
 <?py with capture_as('js'):?>
@@ -42,155 +107,132 @@ Lets say we have an html
 </script>
 <?py #endwith ?>
 
+<div class="svtermsofuse"> <!-- content container -->
 
-<?py with capture_as('body'): ?>
-<div class="container">
-    <div class="svtermsofuse"> <!-- content container -->
-      <div class="list-group">
+    <br/>
+    <br/>
+    <br/>
+    <br/>
 
-            <li>
-           <a href="#" class="list-group-item nav-pills" id="key1">Tab1</a>
-            </li>
-            <li>
-           <a href="#" class="list-group-item nav-pills" id="key2">Tab2</a>
-           </li>
-           <li>
-           <a href="#" class="list-group-item nav-pills" id="key3">Tab3</a>
-            </li>
+    <div id="container">
+    <div class="nav nav-tabs">
 
-
+        <div class="smstepaddcontrol">
+            <a href="#{this.reverse_url('hello', tabname='hello')}" class="btn btn-primary" rel="hello">Hello</a>
+            <a href="#{this.reverse_url('hello', tabname='tabbed')}" class="btn btn-primary" rel="tabbed">Tabbed</a>
+            <a href="#{this.reverse_url('hello', tabname='world')}" class="btn btn-primary" rel="world">World</a>
+            <a href="#{this.reverse_url('hello', tabname='collate')}" class="btn btn-primary" rel="collate">Collate</a>
+          </div>
 
     </div>
+    </div>
+
+    <span class="text_here"></span>
+
+
     </div>
 </div> <!-- end content container -->
-
-<?py #endwith ?>
-
 ```
+Since we are doing this in js now we can simplify the template  bit.
 
-We want to capture the click on each of these tabs as a seperate url state. We first define in blackjack urls/handlers to capture these states.
-
-```python     
-Url(r"/valid/(?P<key>key\d+)/?$",
-    valid_urls_handlers.ValidUrlstabs, 'valid_urls'),
-```
-
-Note that valid_urls is the url name.
-
-
-Then we bind the url states to a listener.
-
+### Javascript Changes:
 
 ```javascript
-bind_route: function () {
-
-    function fire(obj) {
-        $("#"+obj.url_args['key']).parent().css('color: #0000FF');
-    }
-   
-   _route.unbind_bind(';valid_urls', fire);
-   _route.refresh()
-
-},
-```
-
-```javascript
-_route.unbind_bind(';valid_urls', fire);
-```
-This url binds all valid_urls named urls to the callback, fire i.e whenever the url state is a form of "valid/<key>" the particular callback is triggered.The callback here changes the color of the tab "a" element.
-
-  
-### Bringing it all together in the DOM.
-
-
-```javascript
-
- bind: function (){
-    $( ".nav-pills" ).on( "click", function() {
-     targetid = event.target.id;
-    _jack.reverse_url('valid_urls', {'key':targetid},
-    function (url)
-    {
-        _route.push(url);
-
-    })
-
-    });
-```
-
-Now we have url states and the callbacks they trigger. But we need to bring it all together and link it to events on the DOM. For this we create a binding on the dom on the click event for class nav-pills. Now the events on this DOM are to be connected to the _routes states. For this we use _jack.reverse_url. _jack.reverse_url is a convinience function that converts a named url to the complete url. Here in this example we have bind the click events on the nav-pill tabs to a callback that changes the url state to valid/<key> type urls. 
-
-The callback to change url state:
-
-```javascript
-function (url)
-    {
-	_route.push(url);
-
-    }
-
-``` 
-
-When the state of these urls changes. It triggers the change in url state which further trigger the callback fire which changes the color of the tab. Hence a DOM event is connected to a url state and a callback.
-
-
-
-### Conventions for JS code:
-
-init: The contructor for js added. Here all those things should be done that are to be done on page load.
-
-
-bind: All the bindings should be added in this function by convention.
-
-
-### The whole thing
-
-```javascript
-var Hello = function (o) {
-
+var Hello = function (tabname) {
+    var self = this;
+    self.tabname = tabname;
+    self.init();
 };
 
 Hello.prototype = {
-  "change_select": function(cb) {
-    var self = this;
-    console.log("something")
-    $('element').css('color: #0000FF');
-    debugger
+    cache_l: {},
+    
+    init:  function () {
+	var self = this
+	self.urls = {}
+	self.urls = {'hello':'/hello/hello',
+		     'tabbed':'/hello/tabbed',
+		     'world':'/hello/world',
+		     'collate':'/hello/collate'
+		    }
+	self.cache_l.c = $('#container');
+	self.cache_l.links = self.cache_l.c.find("a.btn-primary");
+	self.bind_route();
+	self.bind();
+	
+	
     },
-
-    "init":  function () {
-      this.bind_route();
-      this.bind();
+    
+    
+    
+    bind_route: function () {
+	var self = this;
+	function tab_change_listener(kw) {
+	    if (kw.url_args['tabname'] == 'collate'){
+		self.get_data()
+	    }
+	    else{
+		$(".text_here").text("The tab clicked is " + kw.url_args['tabname']);
+	    }
+	    $('a', self.cache_l.c).removeClass("btn-warning");
+	    $('a[rel='+ kw.url_args.tabname +']', self.cache_l.c).addClass("btn-warning");
+	    
+	}
+	
+	_route.unbind_bind(';hello', tab_change_listener, function() {
+	    console.log("Awesome change");
+	    _route.refresh();
+	});
     },
-
- bind_route: function () {
-
-      function fire(obj) {
-
-        $("#"+obj.url_args['key']).parent().css('color: #0000FF');
-      }
-      _route.unbind_bind(';valid_urls', fire);
-      _route.refresh()
-    },
-
- bind: function (){
-    $( ".nav-pills" ).on( "click", function() {
-     targetid = event.target.id;
-    _jack.reverse_url('valid_urls', {'key':targetid},
-    function (url)
-    {
-        _route.push(url);
-
-    })
-
-    });
-
-
-
-}
-
+    
+    bind: function (){
+	self = this;
+	
+	$( "a.btn-primary", self.cache_l.c).unbind_bind( "click", function() {
+	    var tabname = event.target.rel
+	    url = self.urls[tabname]
+	    _route.push(url);
+	    return false;
+	});
+ 	
+	
+    }
+    
 }
 
 ObjectHasCache.call(Hello.prototype);
 
 ```
+
+We have bound a click on a.btn-primary inside container to this function.
+
+```javascript
+
+$( "a.btn-primary", self.cache_l.c).unbind_bind( "click", function() {
+    var tabname = event.target.rel
+    url = 'hello'+self.urls.tabname
+    _route.push(url);
+   return false;
+});
+```
+
+In the execution of the callback we do
+
+```javascript
+
+_route.push(url);
+
+```
+
+This pushes a url state. This further triggers the callback we have bound using unbind_bind earlier.
+
+```javascript
+	_route.unbind_bind(';hello', tab_change_listener, function() {
+            console.log("Awesome change");
+            _route.refresh();
+        });
+```
+
+This runs the tab_change_listener which does everything that we were doing with templates ealier. Without requiring a reload.
+
+

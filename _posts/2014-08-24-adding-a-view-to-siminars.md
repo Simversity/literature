@@ -1,7 +1,7 @@
 ---
 layout: page
-title: "Adding a view to siminars"
-description: "Add a view to Siminars. Add a url, and an api call"
+title: "Adding urls and backend handler for a new page/extension."
+description: "Adding urls and backend handler for a new page/extension."
 category: tut
 date: 2014-08-29 19:05:08
 tags: []
@@ -84,6 +84,7 @@ In example urlpattern r"/hello/(?P<tabname>\w+)/?$" , the second part is the arg
 ```python
 
 template = "hello/hello"
+context = {}
 context['text'] = "Hello World"
 
 self.render_to_response(template, context)
@@ -130,4 +131,34 @@ HTTPError: HTTP 412: Precondition Failed (someparam is a required parameter)
   
 ```
 
+
+### Basic Template
+
+<?py _context['_layout'] = None ?>
+<html>
+<body>
+
+${text}
+
+</body>
+
+</html>
+
+```text
+
+${text} -> shows the context shared to the template
+
+```
+
+```text
+
+<?py _context['_layout'] = None ?>
+
+```
+
+By default the template loads a layout from the base template this basically tells the templating engine not to do that. We will dive into templates in the next section
+
+### Output
+
+![Complete](/img/helloworld.png?raw=true)
 
