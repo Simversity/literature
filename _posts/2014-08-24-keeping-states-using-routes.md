@@ -61,6 +61,15 @@ Flow:
 4.  If any listeners are available, the url is pushed to the history_stack & the
     navigation bar and the corresponding listener is triggered.
 
+Refresh
+
+```javascript
+
+_route.refresh();
+
+```
+
+Emulates a page refresh such that all the events of for the url are triggered.
 
 
 ## Routes
