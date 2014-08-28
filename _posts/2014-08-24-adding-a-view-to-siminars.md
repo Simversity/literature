@@ -64,21 +64,11 @@ class HelloHandler(BaseHandler):
 As you can see HelloHandler extends BaseHandler. BaseHandler is itself an extension of [tornado web request handlers](http://www.tornadoweb.org/en/branch2.1/web.html). Which providers helper api for http requests. Apart from that BaseHandler provides additional tools and api for handling http requests. Providing a layer for cross platform optimization and tools etc... , request context handling, context handling and api's for templating.
 
 
- 
-
-Tornado is a non blocking server that provides an extensive api for asynchronous code.
-
-
 
 ```python
 def get(self, tabname):
 ```
 In example urlpattern r"/hello/(?P<tabname>\w+)/?$" , the second part is the argument for this function.
-
-
-
-
-
 
 
 ```python
@@ -91,6 +81,8 @@ self.render_to_response(template, context)
 ```
 
 This(self.render_to_response) is helper function from  BaseHandler which renders the template with the given context. If you don't pass them like this. It will use self.template and self.context.
+The template added in the beginning is a tenjin template. The root path to it is blackjack/templates. The hello/hello means its in folder blackjack/templates/hello/ and the template is in filename hello.t_html. t_html being a tenjin default.
+
 
 ### Adding authentication and other decorators
 What do you when you have to make sure the url is only accessible to an authenticated user. Enter helper decorators.
@@ -125,8 +117,7 @@ tornado.web.authenticated checks whether or not the user is authenticated. If no
 
 The core.decorators.signature validates the request if it has all the params or not for example here it will check whether the url contain the get parameter someparam.Otherwise the server would complain
 
-```text
-
+```html
 HTTPError: HTTP 412: Precondition Failed (someparam is a required parameter)
   
 ```
@@ -144,13 +135,13 @@ ${text}
 
 </html>
 
-```text
+```html
 
 ${text} -> shows the context shared to the template
 
 ```
 
-```text
+```html
 
 <?py _context['_layout'] = None ?>
 

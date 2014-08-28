@@ -79,7 +79,7 @@ Flow:
         }
 
         _route.unbind_bind(';hello', tab_change_listener, function() {
-            console.log("Awesome change");
+            console.log("All bindings have been completed");
             _route.refresh();
         });
     },
@@ -284,5 +284,3 @@ This pushes a url state. This further triggers the callback we have bound using 
 ```
 
 This runs the tab_change_listener which does everything that we were doing with templates ealier. Without requiring a reload.
-
-

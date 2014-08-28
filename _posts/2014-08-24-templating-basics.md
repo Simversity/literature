@@ -92,13 +92,33 @@ This extends the layout of the page from base. If you notice many components of 
 ```
 This tells the templating engine that we are customizing the body part of the template.
 
-```text
+There are many such default constructs that base template has.
+
+```html
+<?py if not captured_as('css'): ?>
+
+<?py #endif ?>
+<title>
+<?py if not captured_as('title'): ?>
+  Siminars
+<?py #endif ?>
+</title>
+<?py if not captured_as('js'): ?>
+
+<?py #endif ?>
+
+
+```
+
+These are the definition on the template sides. Hence as long as we do not customize css, title or js with a <?py with capture_as(js): ?> for example a default for that block will automatically added 
+
+```html
 <?py view_class = 'btn-warning' if tabname=='hello' else 'btn-primary' ?>
 ```
 
 run python code inside the tenjin templating engine.
 
-```text
+```html
 ${view_class}
 ```
 Showing context variables in the template.
